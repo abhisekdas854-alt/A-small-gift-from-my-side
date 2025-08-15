@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday, Duddu 🎉</title>
+<meta name="theme-color" content="#ee9ca7">
+<style>
+:root{
+  --bg1:#ffdde1; --bg2:#ee9ca7; --text:#fff; --card:rgba(255,255,255,.14); --border:rgba(255,255,255,.45);
+  --accent:#ff3e76;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:var(--text);overflow-x:hidden}
+.page{position:absolute;inset:0;display:grid;place-items:center;padding:20px;opacity:0;pointer-events:none;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.page.active{opacity:1;transform:translateY(0);pointer-events:auto}
+.card{width:min(900px,94vw);background:var(--card);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:26px;padding:26px 22px 30px;text-align:center;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+h1{font-size:clamp(28px,5vw,50px);margin:8px 0 12px}
+h2{font-size:clamp(20px,3.8vw,32px);margin:8px 0 8px}
+p{font-size:clamp(15px,2.6vw,19px);line-height:1.75;margin:10px 0}
+.btn{appearance:none;border:0;border-radius:999px;padding:12px 22px;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#ffffff,#ffe1e9);color:#b4376d;box-shadow:0 8px 18px rgba(0,0,0,.25);transition:transform .15s ease, box-shadow .2s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(0,0,0,.28)}
+.btn:active{transform:translateY(0);box-shadow:0 6px 14px rgba(0,0,0,.22)}
+.nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+
+/* Floating hearts */
+.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.heart{position:absolute;width:18px;height:18px;background:rgba(255,255,255,.9);transform:rotate(45deg);border-radius:3px;filter:drop-shadow(0 6px 12px rgba(0,0,0,.25));animation:floatUp linear forwards}
+.heart::before,.heart::after{content:"";position:absolute;width:18px;height:18px;background:inherit;border-radius:50%}
+.heart::before{left:-9px;top:0}.heart::after{left:0;top:-9px}
+@keyframes floatUp{0%{transform:translateY(0) rotate(45deg) scale(.9);opacity:0}15%{opacity:1}100%{transform:translateY(-120vh) rotate(45deg) scale(1.2);opacity:0}}
+
+/* Confetti */
+.confetti-area{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:999}
+.confetti{position:absolute;top:-10px;width:8px;height:14px;opacity:.95;transform:rotate(15deg);animation:fall linear forwards;border-radius:3px}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:1}}
+
+/* Landing title shimmer */
+.shimmer{background:linear-gradient(90deg,#fff, #ffe2eb, #fff);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 2.6s linear infinite}
+@keyframes shine{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+
+/* Memory balloons */
+.balloon-area{position:relative;width:min(900px,94vw);height:380px;margin:0 auto;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:16px}
+.balloon{width:90px;height:120px;border-radius:50% 50% 45% 45%;background:linear-gradient(180deg,#fff,#ffd0e2);box-shadow:0 8px 18px rgba(0,0,0,.25);cursor:pointer;display:flex;justify-content:center;align-items:center;transition:transform .2s ease}
+.balloon:after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:-24px;width:2px;height:24px;background:rgba(255,255,255,.75)}
+.memory{position:absolute;left:50%;top:10%;transform:translate(-50%,0);background:rgba(255,255,255,.14);border:1px solid var(--border);border-radius:18px;padding:12px 16px;backdrop-filter:blur(8px);display:block}
+
+/* Cake */
+.cake{position:relative;width:320px;height:240px;margin:0 auto}
+.tier{position:absolute;left:50%;transform:translateX(-50%);border-radius:16px 16px 10px 10px;box-shadow:inset 0 -10px 0 0 rgba(0,0,0,.08)}
+.t1{bottom:0;width:320px;height:100px;background:linear-gradient(180deg,#ffc0cb,#fff)}
+.t2{bottom:80px;width:240px;height:80px;background:linear-gradient(180deg,#ffc0cb,#fff)}
+.t3{bottom:148px;width:170px;height:62px;background:linear-gradient(180deg,#ffc0cb,#fff)}
+.icing{position:absolute;left:50%;transform:translateX(-50%);height:18px;border-radius:0 0 12px 12px}
+.i1{bottom:100px;width:320px;background:linear-gradient(90deg,#ff6ec7,#ffa26b,#ffd166,#95e1d3,#c3aed6,#ff6ec7)}
+.i2{bottom:148px;width:240px;background:linear-gradient(90deg,#ffa26b,#ffd166,#95e1d3,#c3aed6,#ff6ec7)}
+.i3{bottom:190px;width:170px;background:linear-gradient(90deg,#ffd166,#95e1d3,#c3aed6,#ff6ec7)}
+.candle{position:absolute;width:14px;height:40px;background:#fff5a1;border-radius:6px;left:50%;transform:translateX(-50%);bottom:200px;box-shadow:inset 0 -8px 0 #f4da68;cursor:pointer}
+.flame{position:absolute;left:50%;transform:translateX(-50%);bottom:238px;width:18px;height:26px;background:radial-gradient(circle at 50% 30%,#fff5a1,#ff9800 60%,rgba(255,152,0,.45));border-radius:50%;filter:blur(.3px);animation:flicker .9s infinite}
+@keyframes flicker{0%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.12)}100%{transform:translateX(-50%) scale(1)}}
+
+/* Flipbook */
+.flipbook{position:relative;width:min(900px,94vw);height:480px;margin:0 auto;perspective:1200px}
+.sheet{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .8s ease;transform-origin:left}
+.sheet .front,.sheet .back{position:absolute;inset:0;background:#ffffff;color:#b4376d;border:1px solid #ffd0df;border-radius:16px;backface-visibility:hidden;overflow:hidden;display:grid;place-items:center;padding:26px}
+.sheet .back{transform:rotateY(180deg)}
+.sheet.flipped{transform:rotateY(-180deg)}
+.note{max-width:85%;text-align:left;color:#b4376d}
+.note h3{margin:0 0 8px 0;color:#ff3e76;font-size:clamp(18px,3.6vw,26px)}
+.note p{margin:8px 0;color:#8b2b57}
+.fliphint{font-size:12px;opacity:.75;margin-top:6px}
+
+/* End page */
+.collage{position:absolute;inset:0;pointer-events:none;opacity:.3;display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:10px}
+.collage img{width:100%;height:100%;object-fit:cover;border-radius:10px;filter:grayscale(10%)}
+textarea{resize:none}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+<div class="confetti-area" id="confettiArea"></div>
+<audio id="bgm" src="Song.mp3" preload="auto" loop></audio>
+
+<!-- Landing -->
+<section class="page active" id="pg-landing">
+  <div class="card">
+    <h1 class="shimmer">Happy Birthday, <span style="color:var(--accent)">Duddu</span> ✨</h1>
+    <p>Today’s your day. I made you a tiny world of memories, smiles, and a little bit of my heart. 💖</p>
+    <div class="nav"><button class="btn" id="startBtn">Start</button></div>
+    <p class="tiny" style="margin-top:8px;opacity:.85">Music is loading… if not, tap “Start”.</p>
+  </div>
+</section>
+
+<!-- Balloons -->
+<section class="page" id="pg-balloons">
+  <div class="card">
+    <h2>Pop a few memories 🎈</h2>
+    <div class="balloon-area" id="balloonArea"></div>
+    <div class="memory" id="memoryBox">You make every ordinary day feel special. 💫</div>
+    <div class="nav"><button class="btn" id="toCake">Next</button></div>
+  </div>
+</section>
+
+<!-- Cake -->
+<section class="page" id="pg-cake">
+  <div class="card">
+    <h2>Make a wish… then blow the candle 🎂</h2>
+    <div class="cake">
+      <div class="tier t1"></div><div class="icing i1"></div>
+      <div class="tier t2"></div><div class="icing i2"></div>
+      <div class="tier t3"></div><div class="icing i3"></div>
+      <div class="candle" id="candle"></div>
+      <div class="flame" id="flame"></div>
+    </div>
+    <p>Click the candle to blow it out!</p>
+    <div class="nav"><button class="btn" id="toFlip" disabled>Open the Notes</button></div>
+  </div>
+</section>
+
+<!-- Flipbook -->
+<section class="page" id="pg-flipbook">
+  <div class="card">
+    <h2>Little notes for you, Duddu 💌</h2>
+    <div class="flipbook" id="book">
+      <!-- Notes -->
+      <div class="sheet"><div class="front"><div class="note"><h3>First Crush?</h3><p>Even when you’re grumpy, I can’t help but adore you. Don’t try to hide it 😏</p><div class="fliphint">Tap to flip →</div></div></div><div class="back"><div class="note"><h3>Annoying Habits</h3><p>I promise I’ll always be your best friend… but don’t be surprised if I sometimes act like I want a little more 😝</p><div class="fliphint">Tap to flip →</div></div></div></div>
+
+      <div class="sheet"><div class="front"><div class="note"><h3>Secret Admirer</h3><p>You’re my favorite person to annoy… and also the one I secretly wish I could hug forever 😏</p><div class="fliphint">Tap to flip →</div></div></div><div class="back"><div class="note"><h3>Irreplaceable</h3><p>You’re that mix of sweetness and chaos I can’t live without 💕</p><div class="fliphint">Tap to flip →</div></div></div></div>
+
+      <div class="sheet"><div class="front"><div class="note"><h3>Random Tease</h3><p>Warning: Spending too much time with me may cause uncontrollable laughter 😇</p><div class="fliphint">Tap to flip →</div></div></div><div class="back"><div class="note"><h3>Love Potion?</h3><p>I swear, one smile from you, and I’m completely hypnotized 😍</p><div class="fliphint">Tap to flip →</div></div></div></div>
+
+      <div class="sheet"><div class="front"><div class="note"><h3>Sweet Revenge</h3><p>Revenge is sweet… and so is watching you slowly realize I secretly care more than I let on 😏💖</p><div class="fliphint">Tap to flip →</div></div></div><div class="back"><div class="note"><h3>Unstoppable</h3><p>Try to ignore me… I double the teasing instantly 😈</p><div class="fliphint">Tap to flip →</div></div></div></div>
+
+      <div class="sheet"><div class="front"><div class="note"><h3>Little Threat</h3><p>Tease me, prank me, annoy me… but I swear, one day I’ll make you wish you never did 😏💞</p><div class="fliphint">Tap to flip →</div></div></div><div class="back"><div class="note"><h3>Heart Thief</h3><p>Stealing your heart is my full-time job 💘</p><div class="fliphint">Tap to flip →</div></div></div></div>
+
+      <div class="sheet"><div class="front"><div class="note"><h3>Cheeky Confession</h3><p>Sometimes I act mean… but it’s just because I care too much 😇</p><div class="fliphint">Tap to flip →</div></div></div><div class="back"><div class="note"><h3>Endless Tease</h3><p>I’ll bother you until you beg me to stop… but you secretly love it 😏💖</p><div class="fliphint">Tap to flip →</div></div></div></div>
+
+      <div class="sheet" id="lastSheet"><div class="front"><div class="note"><h3>Forever Yours</h3><p>I’ll keep being your best friend, but beware—my heart is plotting to be yours forever 💕</p><div class="fliphint">Tap to flip →</div></div></div><div class="back"><div class="note"><h3>Birthday Surprise</h3><p>Happy Birthday, Duddu! You made me happiest by being you 😍</p><div class="fliphint">Tap to flip →</div></div></div></div>
+    </div>
+    <div class="nav"><button class="btn" id="finishFlip">Finish</button></div>
+  </div>
+</section>
+
+<!-- End Page -->
+<section class="page" id="pg-end">
+  <div class="card" style="position:relative;overflow:hidden;">
+    <div class="collage">
+      <img src="WhatsApp Image 2025-08-14 at 9.57.56 PM.jpeg">
+      <img src="WhatsApp Image 2025-08-14 at 9.57.57 PM.jpeg">
+      <img src="WhatsApp Image 2025-08-14 at 9.58.40 PM.jpeg">
+      <img src="WhatsApp Image 2025-08-14 at 9.58.41 PM.jpeg">
+      <img src="WhatsApp Image 2025-08-14 at 9.58.41 PM (1).jpeg">
+      <img src="WhatsApp Image 2025-08-14 at 9.59.22 PM (2).jpeg">
+    </div>
+    <h1>🎉 Happy Birthday, Duddu! 🎉</h1>
+    <p>You’ll always be my bestest best friend and always stay in my heart 💖</p>
+    <p>I am gonna irritate you till my last breath… and still, you’ll be stuck with me forever 💕</p>
+    <div style="margin-top:20px;">
+      <h3>How did this make you feel? 💌</h3>
+      <textarea id="feedback" placeholder="Type your feelings here..." style="width:90%;height:100px;border-radius:12px;padding:10px;border:none;outline:none;"></textarea>
+      <br>
+      <button class="btn" onclick="alert('Aww! Your message is saved in my heart 💖')">Submit</button>
+    </div>
+    <button class="btn" id="replay" style="margin-top:20px;">Watch Again</button>
+  </div>
+</section>
+
+<script>
+/* Hearts */
+const hearts = document.getElementById('hearts');
+function spawnHeart(){
+  const h=document.createElement('div');
+  h.classList.add('heart');
+  h.style.left=Math.random()*100+'%';
+  h.style.animationDuration=3+Math.random()*4+'s';
+  hearts.appendChild(h);
+  setTimeout(()=>hearts.removeChild(h),7000);
+}
+setInterval(spawnHeart,400);
+
+/* Confetti */
+const confettiArea = document.getElementById('confettiArea');
+function spawnConfetti(count=10){
+  for(let i=0;i<count;i++){
+    const c=document.createElement('div');
+    c.classList.add('confetti');
+    c.style.left=Math.random()*100+'%';
+    c.style.background=`hsl(${Math.random()*360},70%,80%)`;
+    c.style.animationDuration=2+Math.random()*3+'s';
+    confettiArea.appendChild(c);
+    setTimeout(()=>confettiArea.removeChild(c),5000);
+  }
+}
+// Continuous confetti
+setInterval(()=>spawnConfetti(3),300);
+
+/* Balloon messages */
+const balloonArea = document.getElementById('balloonArea');
+const memoryBox = document.getElementById('memoryBox');
+const balloonMsgs=[
+"Oops… did I just pop your heart too? 💘",
+"Pop me once, love me forever 😏",
+"Every pop = one more reason you’re stuck with me 💕",
+"Warning: Balloon contains 99% love, 1% mischief 😜",
+"This pop is sponsored by your smile 😇",
+"Breaking balloons, breaking hearts (yours, maybe?) 💖",
+"You popped it… now you owe me a hug 🤗",
+"That’s one more reason you can’t escape me 😉",
+"Careful… each pop makes me love you more 💞",
+"I swear, Duddu, you’re never getting rid of me… 😏"
+];
+for(let i=0;i<8;i++){
+  const b=document.createElement('div');
+  b.classList.add('balloon');
+  b.textContent='🎈';
+  b.addEventListener('click',()=>{
+    b.style.transform='scale(0.7)';
+    setTimeout(()=>b.style.transform='scale(1)',200);
+    memoryBox.textContent=balloonMsgs[Math.floor(Math.random()*balloonMsgs.length)];
+    spawnConfetti(15);
+  });
+  balloonArea.appendChild(b);
+}
+
+/* Navigation */
+const pages=document.querySelectorAll('.page');
+function showPage(id){
+  pages.forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+document.getElementById('startBtn').onclick=()=>{
+  document.getElementById('bgm').play();
+  showPage('pg-balloons');
+};
+document.getElementById('toCake').onclick=()=>showPage('pg-cake');
+const flame=document.getElementById('flame');
+const candle=document.getElementById('candle');
+const nextCake=document.getElementById('toFlip');
+candle.onclick=()=>{
+  flame.style.display='none';
+  nextCake.disabled=false;
+  spawnConfetti(30);
+};
+document.getElementById('toFlip').onclick=()=>showPage('pg-flipbook');
+document.getElementById('finishFlip').onclick=()=>showPage('pg-end');
+document.getElementById('replay').onclick=()=>location.reload();
+
+/* Flipbook */
+const sheets=document.querySelectorAll('.sheet');
+sheets.forEach(sheet=>{sheet.onclick=()=>sheet.classList.toggle('flipped');});
+</script>
+</body>
+</html>
